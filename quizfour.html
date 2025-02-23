@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .h1 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .prompt {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .prompt label {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rank-input {
+            width: 30px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery 2</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>MYSTERY 2</h1>
+        <p>rank...</p>
+        
+        <form id="rankingForm">
+            <div class="prompt">
+                <input type="checkbox" id="prompt1">
+                <label for="prompt1">
+                    As an environmental scientist, write a 300-word summary for a 12-year-old explaining how climate change is causing rising sea levels in coastal cities and what solutions can help.
+                    <input type="text" class="rank-input" maxlength="1" data-prompt="prompt1">
+                </label>
+            </div>
+            <div class="prompt">
+                <input type="checkbox" id="prompt2">
+                <label for="prompt2">
+                    Tell me about climate change.
+                    <input type="text" class="rank-input" maxlength="1" data-prompt="prompt2">
+                </label>
+            </div>
+            <div class="prompt">
+                <input type="checkbox" id="prompt3">
+                <label for="prompt3">
+                    Explain how climate change affects cities.
+                    <input type="text" class="rank-input" maxlength="1" data-prompt="prompt3">
+                </label>
+            </div>
+            <div class="prompt">
+                <input type="checkbox" id="prompt4">
+                <label for="prompt4">
+                    Describe how climate change affects major cities around the world and how governments are responding.
+                    <input type="text" class="rank-input" maxlength="1" data-prompt="prompt4">
+                </label>
+            </div>
+            <div class="prompt">
+                <input type="checkbox" id="prompt5">
+                <label for="prompt5">
+                    As an environmental scientist, explain in simple terms how climate change is affecting coastal cities and what policies can help.
+                    <input type="text" class="rank-input" maxlength="1" data-prompt="prompt5">
+                </label>
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('rankingForm');
+    const rankInputs = document.querySelectorAll('.rank-input');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        const ranks = [];
+        let isValid = true;
+
+        rankInputs.forEach(input => {
+            const value = input.value;
+            if (value === '' || isNaN(value) || value < 1 || value > 5 || ranks.includes(value)) {
+                isValid = false;
+                input.style.borderColor = 'red'; // Highlight invalid input
+            } else {
+                ranks.push(value);
+                input.style.borderColor = ''; // Reset border
+            }
+        });
+
+        if (!isValid) {
+            alert('Please enter unique numbers from 1 to 5 for each prompt.');
+            return;
+        }
+
+        // Process the valid ranks (e.g., send to server)
+        console.log('Valid ranks:', ranks);
+        alert('Ranks submitted successfully!');
+    });
+
+    rankInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            input.value = input.value.replace(/[^1-5]/g, ''); // Allow only 1-5
+        });
+    });
+});
+</script>
+</html>
